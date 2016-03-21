@@ -1,0 +1,27 @@
+{
+  "name": "SSFUsers",
+  "plural": "SSFUsers",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "logIP": {
+      "type": "string"
+    },
+    "regIP": {
+      "type": "string"
+    },
+    "logDate": {
+      "type": "date"
+    },
+    "regDate": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
