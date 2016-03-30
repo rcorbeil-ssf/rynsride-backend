@@ -35,5 +35,21 @@
   "SSFUsers": {
     "dataSource": "mongo",
     "public": true
+  },
+  "Vehicles": {
+    "dataSource": "mongo",
+    "public": true
+  },
+  "PostedTrips": {
+    "dataSource": "mongo",
+    "public": true
+  },
+  "RideRequests": {
+    "dataSource": "mongo",
+    "public": true
+  },
+  "Ratings": {
+    "dataSource": "mongo",
+    "public": true
   }
 }

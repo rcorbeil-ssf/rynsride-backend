@@ -1,31 +1,15 @@
 {
-  "name": "SSFUsers",
-  "plural": "SSFUsers",
-  "base": "User",
+  "name": "RideRequests",
+  "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "logIP": {
+    "riderId": {
       "type": "string"
     },
-    "regIP": {
-      "type": "string"
-    },
-    "logDate": {
-      "type": "date"
-    },
-    "regDate": {
-      "type": "date"
-    },
-    "firstName": {
-      "type": "string"
-    },
-    "lastName": {
-      "type": "string"
-    },
-    "address": {
+    "startAddress": {
       "type": {
         "street": "string",
         "city": "string",
@@ -33,31 +17,30 @@
         "zip": "string"
       }
     },
-    "phone": {
-      "type": "string"
+    "startGeopoint": {
+      "type": "geopoint"
     },
-    "photo": {
-      "type": "string"
+    "destAddress": {
+      "type": {
+        "street": "string",
+        "city": "string",
+        "state": "string",
+        "zip": "string"
+      }
     },
-    "gender": {
-      "type": "string"
+    "destGeopoint": {
+      "type": "geopoint"
     },
-    "age": {
+    "startDate": {
+      "type": "date"
+    },
+    "startTime": {
       "type": "number"
     },
-    "facebookAccount": {
-      "type": "string"
+    "seatsRequired": {
+      "type": "number"
     },
-    "language": {
-      "type": "string"
-    },
-    "avgRating": {
-      "type": "string"
-    },
-    "numRatings": {
-      "type": "string"
-    },
-    "notifications": {
+    "needRoundTrip": {
       "type": "boolean"
     },
     "sameGender": {
@@ -68,6 +51,18 @@
     },
     "likesDogs": {
       "type": "boolean"
+    },
+    "bike": {
+      "type": "boolean"
+    },
+    "wheelchair": {
+      "type": "boolean"
+    },
+    "beenRated": {
+      "type": "boolean"
+    },
+    "state": {
+      "type": "string"
     }
   },
   "validations": [],
