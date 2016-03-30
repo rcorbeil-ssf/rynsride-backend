@@ -1,8 +1,8 @@
 module.exports = function(app) {
-/*TODO
-	var jsonArr = require('../../fakeData/fakePostedTrips.json');
 
-	var Trip = app.models.Trips;
+	var jsonArr = require('../fakeData/fakePostedTrips.json');
+
+	var Trip = app.models.PostedTrips;
 
 	Trip.destroyAll();
 
@@ -12,5 +12,5 @@ module.exports = function(app) {
 		});
 	});
 	console.log("fake Trips inserted successfully");
-*/
+
 };

@@ -1,8 +1,8 @@
 module.exports = function(app) {
-/*TODO
-	var jsonArr = require('../../fakeData/fakeSSFUsers.json');
 
-	var Users = app.models.SSF-Users;
+	var jsonArr = require('../fakeData/fakeSSFUsers.json');
+
+	var Users = app.models.SSFUsers;
 
 	Users.destroyAll();
 
@@ -12,5 +12,5 @@ module.exports = function(app) {
 		});
 	});
 	console.log("fake SSF-Users inserted successfully");
-*/
+
 };

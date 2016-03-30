@@ -52,10 +52,10 @@
       "type": "string"
     },
     "avgRating": {
-      "type": "string"
+      "type": "number"
     },
     "numRatings": {
-      "type": "string"
+      "type": "number"
     },
     "notifications": {
       "type": "boolean"

@@ -1,6 +1,6 @@
 module.exports = function(app) {
-/*TODO
-	var jsonArr = require('../../fakeData/fakeRideRequests.json');
+
+	var jsonArr = require('../fakeData/fakeRideRequests.json');
 
 	var RideRequest = app.models.RideRequests;
 
@@ -12,5 +12,5 @@ module.exports = function(app) {
 		});
 	});
 	console.log("fake RideRequests inserted successfully");
-*/
+
 };

@@ -1,2 +1,52 @@
 [
+    { 
+        "userID" : "1",
+        "year": 1990,
+        "make": "Ford",
+        "model": "Fiesta",
+        "color": "Cyan",
+        "licensePlate": "RLBD6969",
+        "bikeRack": true,
+        "wheelchair": false,
+        "photo": "images/vehicles/myFiesta.jpg",
+        "id": 1
+    },
+    {
+        "userID" : "2",
+        "year": 1999,
+        "make": "Nissan",
+        "model": "Sentra",
+        "color": "Magenta",
+        "licensePlate": "BD2THBN",
+        "bikeRack": false,
+        "wheelchair": true,
+        "photo": "images/vehicles/myNissan.jpg",
+        "id": 2
+    },
+    {
+        "userID" : "3",
+        "year": 2015,
+        "make": "Toyota",
+        "model": "Camry",
+        "color": "Blue",
+        "licensePlate": "FSTy106r",
+        "bikeRack": false,
+        "wheelchair": true,
+        "photo": "images/vehicles/myCamry.jpg",
+        "id": 3
+    },
+    {
+        "userID" : "4",
+        "year":  1980,
+        "make": "Fiat",
+        "model": "500",
+        "color": "Red",
+        "licensePlate": "Swggn8080",
+        "bikeRack": true,
+        "wheelchair": false,
+        "photo": "images/vehicles/myFiat.jpg",
+        "id": 4
+    }
+
+    
 ]
