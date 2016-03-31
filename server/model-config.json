@@ -51,5 +51,13 @@
   "Ratings": {
     "dataSource": "mongo",
     "public": true
+  },
+  "Matches": {
+    "dataSource": "mongo",
+    "public": true
+  },
+  "Reservations": {
+    "dataSource": "mongo",
+    "public": true
   }
 }

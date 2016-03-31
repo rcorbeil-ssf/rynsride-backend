@@ -63,6 +63,9 @@
     },
     "state": {
       "type": "string"
+    },
+    "createDate": {
+      "type": "date"
     }
   },
   "validations": [],
