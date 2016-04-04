@@ -1,0 +1,30 @@
+[
+  {
+    "rideId": "1",
+    "tripId": "1",
+    "dateStamp": "2016-03-30",
+    "updateStamp": "2016-03-30",
+    "date": "2016-03-30"
+  },
+  {
+    "rideId": "2",
+    "tripId": "1",
+    "dateStamp": "2016-03-30",
+    "updateStamp": "2016-03-30",
+    "date": "2016-03-30"
+  },
+  {
+    "rideId": "1",
+    "tripId": "2",
+    "dateStamp": "2016-03-30",
+    "updateStamp": "2016-03-30",
+    "date": "2016-03-30"
+  },
+  {
+    "rideId": "2",
+    "tripId": "2",
+    "dateStamp": "2016-03-30",
+    "updateStamp": "2016-03-30",
+    "date": "2016-03-30"
+  }
+]
