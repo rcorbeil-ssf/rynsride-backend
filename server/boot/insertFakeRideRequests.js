@@ -6,8 +6,8 @@ module.exports = function(app) {
 
 	RideRequest.destroyAll();
 
-	jsonArr.forEach(function(rideRequestDict){
-		RideRequest.create(rideRequestDict, function(err, record) {
+	jsonArr.forEach(function(jsonArr){
+		RideRequest.create(jsonArr, function(err, record) {
 			if (err) return console.log(err);
 		});
 	});

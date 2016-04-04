@@ -6,8 +6,8 @@ module.exports = function(app) {
 
 	Trip.destroyAll();
 
-	jsonArr.forEach(function(tripDict){
-		Trip.create(tripDict, function(err, record) {
+	jsonArr.forEach(function(jsonArr){
+		Trip.create(jsonArr, function(err, record) {
 			if (err) return console.log(err);
 		});
 	});

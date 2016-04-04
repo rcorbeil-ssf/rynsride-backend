@@ -6,8 +6,8 @@ module.exports = function(app) {
 
 	Users.destroyAll();
 
-	jsonArr.forEach(function(userDict){
-		Users.create(userDict, function(err, record) {
+	jsonArr.forEach(function(jsonArr){
+		Users.create(jsonArr, function(err, record) {
 			if (err) return console.log(err);
 		});
 	});
