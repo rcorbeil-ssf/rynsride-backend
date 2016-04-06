@@ -12,6 +12,20 @@ module.exports = function(SSFUsers) {
     // folder, then updates the SSFUsers instance with a partial URL, so that later
     // we will be able to download the photo using the partial URL, prepended with
     // the RESTServices ENDPOINT_URL.
+    SSFUsers.observe('after save', function(ctx, next) {
+        if(ctx.isNewInstance === true) {
+            var instance = ctx.instance;
+            instance.createAccessToken(1209600000, function(err, response) { 
+                if(err === null) {
+                    ctx.instance["token"] = response.id;
+                }
+                next();
+            });
+        } else {
+             next();
+        }
+    });
+    
     SSFUsers.upload = function (ctx,options,cb) {
         if(!options) options = {};
         ctx.req.params.container = 'common';
@@ -44,7 +58,7 @@ module.exports = function(SSFUsers) {
             accepts: [
                 { arg: 'ctx', type: 'object', http: { source:'context' } },
                 { arg: 'options', type: 'object', http:{ source: 'query'} }
-            ],
+            ], //ryan was here
             returns: {
                 arg: 'fileObject', type: 'object', root: true
             },

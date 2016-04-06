@@ -15,18 +15,14 @@ module.exports = function(model) {
         var RideRequests = model.app.models.RideRequests;
         var Users = model.app.models.SSFUsers;
         var async = require("async");
-        
         model.find({
             where:{
                 tripId:tripId,
                 state:"pendDrCmt"
             }
         }, function(error, success) {
-            console.log(error);
-            console.log(success);
             getRideRequests(success);
         });
-        
         function getRideRequests(returnArray) {
             async.forEachOf(returnArray, function (k, indexNum, next) {
             	RideRequests.find({
@@ -81,8 +77,6 @@ module.exports = function(model) {
             	} 
             		cb(0, returnArray);
             });
-        }
-        
-       
+        }   
     };
 };

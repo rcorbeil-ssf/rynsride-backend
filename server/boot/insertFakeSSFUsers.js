@@ -6,11 +6,11 @@ module.exports = function(app) {
 
 	Users.destroyAll();
 
-	jsonArr.forEach(function(jsonArr){
+	
 		Users.create(jsonArr, function(err, record) {
 			if (err) return console.log(err);
 		});
-	});
+	
 	console.log("fake SSF-Users inserted successfully");
 
 };
