@@ -11,7 +11,7 @@ module.exports = function(Matches) {
         accepts: [
             {arg: 'tripId', type: 'string', description: 'An object for filtering matches.'}
         ],
-        notes: "Testing out notes",
+        notes: "Used to pull matched rides",
         description: "Returns a partial results list of the query.",
         returns: {type: 'object', root: true}
     });
