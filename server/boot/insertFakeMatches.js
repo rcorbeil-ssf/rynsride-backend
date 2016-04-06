@@ -12,5 +12,4 @@ module.exports = function(app) {
 		});
 	});
 	console.log("fake Matches inserted successfully");
-
 };
