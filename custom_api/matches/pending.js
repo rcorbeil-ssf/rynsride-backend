@@ -1,33 +1,34 @@
-module.exports = function(model, state) {
+module.exports = function(Matches, path, state, notes, model, typeId, method) {
     //instantiates what the method is
-    model.remoteMethod('pending', {
-        http: {path: '/pending', verb: 'post'},
+    Matches.remoteMethod(path, {
+        http: {path: '/'+path, verb: method},
         accepts: [
-            {arg: 'tripId', type: 'string', description: 'An object for filtering matches.'}
+            {arg: typeId, type: 'string', description: 'An object for filtering matches.'}
         ],
-        notes: "Testing out notes",
+        notes: notes,
         description: "Returns a partial results list of the query.",
         returns: {type: 'object', root: true}
     });
     //what it actually does    
-   
-    model.pending = function(tripId, cb) {
-        var RideRequests = model.app.models.RideRequests;
-        var Users = model.app.models.SSFUsers;
+    
+    Matches[path] = function(passedId, cb) {
+        var targetModel = Matches.app.models[model];
+        var Users = Matches.app.models.SSFUsers;
         var async = require("async");
-        model.find({
+        var tempObj = {
             where:{
-                tripId:tripId,
-                state:"pendDrCmt"
+                state: state
             }
-        }, function(error, success) {
+        };
+        tempObj.where[typeId] = passedId;
+        Matches.find(tempObj, function(error, success) {
             getRideRequests(success);
         });
         function getRideRequests(returnArray) {
             async.forEachOf(returnArray, function (k, indexNum, next) {
-            	RideRequests.find({
+            	 targetModel.find({
             		where: {
-            			id: k.__data.rideId
+            			id: k.__data[typeId]
             		}
             	},function(err, rideResponse) {
             		if(err) {
