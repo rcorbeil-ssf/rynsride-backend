@@ -6,11 +6,8 @@ module.exports = function(app) {
 
 	Match.destroyAll();
 
-	jsonArr.forEach(function(jsonArr){
-		Match.create(jsonArr, function(err, record) {
-			if (err) return console.log(err);
-		});
+	Match.create(jsonArr, function(err, record) {
+		if (err) return console.log(err);
 	});
 	console.log("fake Matches inserted successfully");
-
 };

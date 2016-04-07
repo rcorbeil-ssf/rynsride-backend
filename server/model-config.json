@@ -56,8 +56,8 @@
     "dataSource": "mongo",
     "public": true
   },
-  "Reservations": {
-    "dataSource": "mongo",
+  "container": {
+    "dataSource": "storage",
     "public": true
   }
 }
