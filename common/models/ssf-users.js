@@ -50,7 +50,7 @@ module.exports = function(SSFUsers) {
             }
         });
     };
-
+    
     SSFUsers.remoteMethod(
         'upload',
         {
@@ -59,6 +59,7 @@ module.exports = function(SSFUsers) {
                 { arg: 'ctx', type: 'object', http: { source:'context' } },
                 { arg: 'options', type: 'object', http:{ source: 'query'} }
             ], //ryan was here
+            // so was Orym the Dragon Slayer
             returns: {
                 arg: 'fileObject', type: 'object', root: true
             },

@@ -16,6 +16,10 @@
     },
     "dateStamp": {
       "type": "date"
+    },
+    "state": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],
