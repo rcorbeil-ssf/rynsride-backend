@@ -1,4 +1,4 @@
-var CONTAINERS_URL = '/containers/common/download/'; //maps to ../server/storage/common
+var CONTAINERS_URL = '/api/containers/common/download/'; //maps to ../server/storage/common
 
 var loopback = require('loopback');
 var path = require('path');
@@ -29,21 +29,16 @@ module.exports = function(SSFUsers) {
     SSFUsers.upload = function (ctx,options,cb) {
         if(!options) options = {};
         ctx.req.params.container = 'common';
-
         SSFUsers.app.models.container.upload(ctx.req,ctx.result,options,function (err,fileObj) {
             if(err) {
-                console.log('err');
                 cb(err);
             } else {
                 var userId = (fileObj.fields.userId[0]);
-                //var userId = parseInt(fileObj.fields.userId[0]);
                 var fileInfo = fileObj.files.file[0];
-                SSFUsers.update({_id: userId}, {
-                    photo: CONTAINERS_URL+fileInfo.name
+                var URI = "https://" + ctx.req.headers.host + CONTAINERS_URL+fileInfo.name;
+                SSFUsers.update({id: userId}, {
+                    photo: URI
                 }, function(err, affected, resp) {
-                    console.log(err);
-                    console.log(affected);
-                    console.log(resp);
                 });
                 
                 cb(null, fileObj);
@@ -58,8 +53,7 @@ module.exports = function(SSFUsers) {
             accepts: [
                 { arg: 'ctx', type: 'object', http: { source:'context' } },
                 { arg: 'options', type: 'object', http:{ source: 'query'} }
-            ], //ryan was here
-            // so was Orym the Dragon Slayer
+            ], 
             returns: {
                 arg: 'fileObject', type: 'object', root: true
             },
