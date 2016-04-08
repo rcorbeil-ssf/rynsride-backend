@@ -3,8 +3,8 @@
     "driverId": "1",
     "startAddress": { "street": "123 Duck Lane", "city":"SD", "state": "CA", "zip": "90020"},
     "startGeopoint": {
-      "lat": 32,
-      "lng": -117
+      "lat": 1,
+      "lng": 1
     },
     "destAddress": { "street": "8 Main St.", "city":"Oceanside", "state": "CA", "zip": "94320"},
     "destGeopoint": {
