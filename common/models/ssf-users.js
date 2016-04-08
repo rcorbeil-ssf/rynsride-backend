@@ -8,10 +8,6 @@ var app = module.exports = loopback();
 
 module.exports = function(SSFUsers) {
     
-    // This function receives an uploaded photo file to the ../server/storage/common
-    // folder, then updates the SSFUsers instance with a partial URL, so that later
-    // we will be able to download the photo using the partial URL, prepended with
-    // the RESTServices ENDPOINT_URL.
     SSFUsers.observe('after save', function(ctx, next) {
         if(ctx.isNewInstance === true) {
             var instance = ctx.instance;
@@ -26,6 +22,9 @@ module.exports = function(SSFUsers) {
         }
     });
     
+    // This function receives an uploaded photo file to the ../server/storage/common
+    // folder, then updates the SSFUsers instance with a FQDN URL, so that later
+    // we will be able to load the photo from HTML using the URL
     SSFUsers.upload = function (ctx,options,cb) {
         if(!options) options = {};
         ctx.req.params.container = 'common';
