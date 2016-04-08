@@ -18,7 +18,7 @@ module.exports = function(model, state) {
         model.find({
             where:{
                 tripId:tripId,
-                state:"pendDrCmt"
+                state:"pending"
             }
         }, function(error, success) {
             getRideRequests(success);
