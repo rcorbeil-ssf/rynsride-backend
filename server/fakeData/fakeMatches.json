@@ -13,7 +13,7 @@
     "dateStamp": "2016-03-30",
     "updateStamp": "2016-03-30",
     "date": "2016-03-30",
-    "state": "new"
+    "state": "reserved"
   },
   {
     "rideId": "1",
@@ -29,6 +29,6 @@
     "dateStamp": "2016-03-30",
     "updateStamp": "2016-03-30",
     "date": "2016-03-30",
-    "state": "new"
+    "state": "matched"
   }
 ]
