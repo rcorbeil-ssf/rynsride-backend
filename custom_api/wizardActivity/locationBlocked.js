@@ -1,9 +1,9 @@
 module.exports = function(model) {
 	// instantiates the method
-	model.remoteMethod('noToken', {
-		http: {path: '/noToken', verb: 'get'},
+	model.remoteMethod('locationBlocked', {
+		http: {path: '/locationBlocked', verb: 'get'},
 		accepts: [
-			{arg: 'nearby', type: 'geopoint', description: 'Pass in a geopoint, will give nearby trips.'}
+			{arg: 'closest', type: 'string', description: 'pull up most recent trips'}
 		],
 		// notes
 		// description
@@ -11,15 +11,14 @@ module.exports = function(model) {
 	});
 	// what it does
 	
-	model.noToken = function(geopoint, cb) {
+	model.locationAllowed = function(geopoint, cb) {
 		var PostedTrips = model.app.models.PostedTrips;
 		// var
 		var async = require("async");
 		model.find({
-			where: {
-				startGeopoint: geopoint
-				//more parameters don't need
-			}
+			where:
+				{startLocation:
+					{near:	{lat: 1, lng: 1}}}
 		}, function(error, success){
 			getPostedTrips(success);
 		});
@@ -28,11 +27,8 @@ module.exports = function(model) {
 				PostedTrips.find({
 					where: {
 						//change properties to names to models
-					//	startGeopoint: k.__data.startGeopoint,
-					//	startDate: k.__data.startDate,
-					//	startLocation: k.__data.startAddress.city,
-					//	endLocation: k.__data.endAddress.city,	
-						startGeopoint: {near: k.__data.startGeopoint}
+				
+						startGeopoint: {near: k.startGeopoint}
 					},
 					
 				}, function(err, tripRes){
@@ -42,7 +38,7 @@ module.exports = function(model) {
 						next(error);
 					}
 					else {
-						returnArray[indexNum].startGeopoint = tripRes[0].__data.startGeopoint;
+						returnArray[indexNum].startGeopoint = tripRes[0].startGeopoint;
 						// returnArray[indexNum].firstName = riderResponse[0].__data.firstName;  example
 						 next();
 					}
