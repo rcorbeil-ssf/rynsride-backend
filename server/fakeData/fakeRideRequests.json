@@ -20,7 +20,7 @@
         "lat": 33,
         "lng": -116
     },
-    "startDate": "2016-03-19",
+    "startDate": "2016-03-19T00:00:00.001",
     "startTime": 0,
     "seatsRequired": 1,
     "needRoundTrip": false,

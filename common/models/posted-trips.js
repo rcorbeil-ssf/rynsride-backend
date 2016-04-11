@@ -4,5 +4,4 @@ var getNamesApi = require('../../custom_api/postedTrips.js');
 module.exports = function(PostedTrips) {
     locationAllowed(PostedTrips);
     getNamesApi(PostedTrips);
-    
 };
