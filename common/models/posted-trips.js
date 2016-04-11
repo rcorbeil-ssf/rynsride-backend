@@ -1,6 +1,8 @@
 var noTokenApi = require('../../custom_api/wizardActivity.js');
+var getNamesApi = require('../../custom_api/postedTrips.js');
 module.exports = function(PostedTrips) {
     noTokenApi(PostedTrips);
+    getNamesApi(PostedTrips);
     
     // PostedTrips.afterRemote('find', function(context, instance, next) {
     //     var SSFUsers = PostedTrips.app.models.SSFUsers;
@@ -39,6 +41,5 @@ module.exports = function(PostedTrips) {
     //             // endService(returnArray, totalPages);
     //         });
     //     }
-        
     // });
 };
