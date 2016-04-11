@@ -23,6 +23,8 @@ module.exports = function(model) {
 			getPostedTrips(success);
 		});
 		function getPostedTrips(returnArray) {
+			
+			
 			async.forEachOf(returnArray, function (k, indexNum, next){
 				PostedTrips.find({
 					where: {
@@ -56,3 +58,4 @@ module.exports = function(model) {
 	};
 };
 
+//	returnArray[indexNum].startGeopoint = tripRes[0].startGeopoint;
