@@ -1,5 +1,5 @@
-module.exports = function(model) {
-	// instantiates the method
+// module.exports = function(model) {
+// 	// instantiates the method
 	model.remoteMethod('locationBlocked', {
 		http: {path: '/locationBlocked', verb: 'get'},
 		accepts: [
@@ -15,9 +15,12 @@ module.exports = function(model) {
 		var PostedTrips = model.app.models.PostedTrips;
 		// var
 		var async = require("async");
+		
+// 		var variable = {};
+// 		if(startGeopoint == undefined){}
 		model.find({
 			where:
-				{startLocation:
+				{startDate:
 					{near:	{lat: 1, lng: 1}}}
 		}, function(error, success){
 			getPostedTrips(success);
