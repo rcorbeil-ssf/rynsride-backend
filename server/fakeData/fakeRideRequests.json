@@ -2,7 +2,7 @@
     "riderId": "2",
     "startAddress": {
         "street": "123 Duck Lane",
-        "city": "SD",
+        "city": "LA",
         "state": "CA",
         "zip": "90020"
     },
@@ -12,7 +12,7 @@
     },
     "destAddress": {
         "street": "8 Main St.",
-        "city": "Oceanside",
+        "city": "San Clemente",
         "state": "CA",
         "zip": "94320"
     },
@@ -36,7 +36,7 @@
     "riderId": "2",
     "startAddress": {
         "street": "321 ASDF Lane",
-        "city": "Oceanside",
+        "city": "Oside",
         "state": "CA",
         "zip": "90020"
     },
@@ -80,7 +80,7 @@
     },
     "destAddress": {
         "street": "8 Main St.",
-        "city": "Oceanside",
+        "city": "Del Mar",
         "state": "CA",
         "zip": "94320"
     },
