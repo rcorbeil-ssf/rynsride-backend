@@ -1,76 +1,72 @@
 module.exports = function(model) {
-	// instantiates the method
-	model.remoteMethod('computeMatches', {
-		http: {path: '/computeMatches', verb: 'put'},
-		accepts: [
-			{arg: 'nearby', type: 'geopoint', description: 'Pass in a geopoint, will give nearby trips.'}
-		],
-		// notes
-		// description
-		returns: {type: 'object', root: true}
-	});
-	// what it does
-	
-	model.computeMatches = function(geopoint, cb) {
-		var PostedTrips = model.app.models.PostedTrips;
-		var stubRideRequest = {
-			"startGeopoint": {"lng": -117, "lat": 32},
-			"destGeopoint": {"lng": -116, "lat": 31},
-			"startDate": "2016-03-30T00:00:00.000Z",
-			//"startTime": 9:04AM
-		};
-		
 
-		var async = require("async");
-		model.find({
-			where:{
-				startGeopoint:
-					{maxDistance: 10000, 
-					  near:	{lat: stubRideRequest.startGeopoint.lat, lng: stubRideRequest.startGeopoint.lng 
-						
-					}},
-				destGeopoint:
-					{maxDistance: 10000, 
-					  near:	{lat: stubRideRequest.destGeopoint.lat, lng: stubRideRequest.destGeopoint.lng 
-						
-					}},
-				state: "new",
-				startDate: stubRideRequest.startDate
-			}
-		}, function(error, success){
-			getPostedTrips(success);
-		});
-		function getPostedTrips(returnArray) {
-			async.forEachOf(returnArray, function (k, indexNum, next){
-				PostedTrips.find({
-					where: {
-						//change properties to names to models
-				
-						startGeopoint: {near: k.startGeopoint}
-					},
+// This hook runs after the PostedTrip instance has been added to the PostedTrips model
+// It searches for any matching RequestRides instances.  If any found, it adds an
+// instance to the Matches model.
+model.observe('after save', function(ctx, next) {
+	if (ctx.instance) {
+	  console.log('Saved %s#%s', ctx.Model.modelName, ctx.instance.id);
+	} else {
+	  console.log('Updated %s matching %j',
+	    ctx.Model.pluralModelName,
+	    ctx.where);
+	}
+	RideRequests = model.app.models.RideRequests;
+	Matches = model.app.models.Matches;
+	
+
+	var async = require("async");
+	//TODO check for undefined values in inputs...
+	//TODO filter by startTime also...
+	
+	// Search for matching Ride requests
+	RideRequests.find({
+		where:{
+			startGeopoint:
+				{maxDistance: ctx.instance.__data.pickupRadius
+				near:	{lat: ctx.instance.__data.startGeopoint.lat, lng: ctx.instance.__data.startGeopoint.lng 
+				}},
+			destGeopoint:
+				{maxDistance: ctx.instance.__data.pickupRadius
+				  near:	{lat: ctx.instance.__data.destGeopoint.lat, lng: ctx.instance.__data.destGeopoint.lng 
 					
-				}, function(err, tripRes){
-					if(err) {
-						var error = new Error('async.forEach operation failed trips response error');
-						error.statusCode = 500;
-						next(error);
-					}
-					else {
-						returnArray[indexNum].startGeopoint = tripRes[0].startGeopoint;
-						// returnArray[indexNum].firstName = riderResponse[0].__data.firstName;  example
-						 next();
-					}
-				});
-			}, function(err) {
-			    if(err) {
-			    	var error = new Error('async.forEach operation failed general error');
-            		error.statusCode = 500;
-            		cb(error);
-			    }
-			    // postedTripData(returnArray);
-			    cb(0, returnArray);
-			});
+				}},
+			state: "new",
+			startDate: ctx.instance.__data.startDate
 		}
-	};
-};
+	}, function(error, success){
+		createMatches(success);
+	});
+	
+	// Create instance(s) in the Matches model
+	function createMatches(foundArray) {
+		async.forEachOf(foundArray, function (k, indexNum, next){
+			var properties = {
+				tripId: ctx.instance.__data.id,
+				rideId: k.id,
+				dateStamp: ctx.instance.__data.startDate,
+				state: ctx.instance.__data.state
+			};
+			
+			Matches.create(properties, function(err, tripRes){
+				if(err) {
+					var error = new Error('async.forEach operation failed trips response error');
+					error.statusCode = 500;
+					next(error);
+				}
+				else {
+					 next();
+				}
+			});
+		}, function(err) {
+		    if(err) {
+		    	var error = new Error('async.forEach operation failed general error');
+        		error.statusCode = 500;
+        		console.log(error);
+		    }
+		});
+	}
+	next();
+	}
+)};
 
