@@ -1,7 +1,9 @@
 var locationAllowed = require('../../custom_api/wizardActivity/locationAllowed.js');
-var getNames = require('../../custom_api/postedTrips.js');
+var getNamesApi = require('../../custom_api/postedTrips.js');
+var computeMatches = require('../../custom_api/matches/compute-matches.js');
 
 module.exports = function(PostedTrips) {
     locationAllowed(PostedTrips);
-    getNames(PostedTrips);
+    computeMatches(PostedTrips);
+    getNamesApi(PostedTrips);  
 };
