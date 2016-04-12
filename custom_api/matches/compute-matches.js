@@ -23,11 +23,11 @@ model.observe('after save', function(ctx, next) {
 	RideRequests.find({
 		where:{
 			startGeopoint:
-				{maxDistance: ctx.instance.__data.pickupRadius
+				{maxDistance: ctx.instance.__data.pickupRadius,
 				near:	{lat: ctx.instance.__data.startGeopoint.lat, lng: ctx.instance.__data.startGeopoint.lng 
 				}},
 			destGeopoint:
-				{maxDistance: ctx.instance.__data.pickupRadius
+				{maxDistance: ctx.instance.__data.pickupRadius,
 				  near:	{lat: ctx.instance.__data.destGeopoint.lat, lng: ctx.instance.__data.destGeopoint.lng 
 					
 				}},
