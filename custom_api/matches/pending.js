@@ -17,7 +17,8 @@ module.exports = function(Matches, path, state, notes, model, typeId, method) {
         var async = require("async");
         var tempObj = {
             where:{
-                state: state
+                tripId:passedId,
+                state:"pending"
             }
         };
         tempObj.where[typeId] = passedId;
