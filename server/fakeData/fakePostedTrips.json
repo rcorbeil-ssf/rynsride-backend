@@ -33,8 +33,7 @@
       "lat": 28,
       "lng": -116
     },
-    "destAddress": { "street": "8 Main St.", "city":"Ventura", "state": "CA", "zip": "94320"},
-
+    "destAddress": { "street": "8 Main St.", "city":"Oceanside", "state": "CA", "zip": "94320"},
     "destGeopoint": {
       "lat": 33,
       "lng": -117

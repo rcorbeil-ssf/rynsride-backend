@@ -52,7 +52,8 @@ module.exports = function(SSFUsers) {
             accepts: [
                 { arg: 'ctx', type: 'object', http: { source:'context' } },
                 { arg: 'options', type: 'object', http:{ source: 'query'} }
-            ], 
+            ], //ryan was here
+              // so was Orym the Dragon Slayer
             returns: {
                 arg: 'fileObject', type: 'object', root: true
             },
