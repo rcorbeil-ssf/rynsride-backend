@@ -27,6 +27,19 @@ model.observe('after save', function(ctx, next) {
         	console.log(error);
 	} else {
 		THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
+		
+		console.log(ctx.instance.__data.startDate);
+		console.log(ctx.instance.__data.startTime);
+		console.log(ctx.instance.__data.startTime + THIRTY_MINUTES);
+		console.log(ctx.instance.__data.startTime - THIRTY_MINUTES);
+		
+		var year = ctx.instance.__data.startDate.getUTCFullYear();
+		var month = ctx.instance.__data.startDate.getUTCMonth();
+		var day = ctx.instance.__data.startDate.getUTCDate();
+		// convert to UTC format, lose hrs, min, secs
+		ctx.instance.__data.startDate.setTime(Date.UTC(year, month, day));
+		console.log(ctx.instance.__data.startDate);
+		
 		RideRequests.find({
 			where:{
 				startGeopoint:
@@ -43,9 +56,9 @@ model.observe('after save', function(ctx, next) {
 				   ],
 				startDate: ctx.instance.__data.startDate,
 				and:[
-					{startTime: {gte:  ctx.instance.__data.startTime - THIRTY_MINUTES}},
-					{startTime: {lte:  ctx.instance.__data.startTime + THIRTY_MINUTES}}
-				]					
+				 	{startTime: {gte:  ctx.instance.__data.startTime - THIRTY_MINUTES}},
+				 	{startTime: {lte:  ctx.instance.__data.startTime + THIRTY_MINUTES}}
+				    ]					
 			}
 		}, function(error, success){
 			createMatches(success);
@@ -58,6 +71,7 @@ model.observe('after save', function(ctx, next) {
 					tripId: ctx.instance.__data.id,
 					rideId: k.id,
 					dateStamp: ctx.instance.__data.startDate,
+					updateStamp: new Date(),
 					state: "matched"
 				};
 				
