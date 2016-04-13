@@ -64,31 +64,22 @@
     "bike": false,
     "wheelchair": false,
     "beenRated": false,
-    "state": "pending",
-    "id": "4"
-}, {
+    "state": "new",
+    "id": "2"      
+  },
+  {
     "riderId": "2",
-    "startAddress": {
-        "street": "123 Duck Lane",
-        "city": "SD",
-        "state": "CA",
-        "zip": "90020"
-    },
+    "startAddress": { "street": "123 Duck Lane", "city":"SD", "state": "CA", "zip": "90020"},
     "startGeopoint": {
-        "lat": 32,
-        "lng": -117
+      "lat": 32,
+      "lng": -117
     },
-    "destAddress": {
-        "street": "8 Main St.",
-        "city": "Del Mar",
-        "state": "CA",
-        "zip": "94320"
-    },
+    "destAddress": { "street": "8 Main St.", "city":"Oceanside", "state": "CA", "zip": "94320"},
     "destGeopoint": {
-        "lat": 33,
-        "lng": -116
+      "lat": 33,
+      "lng": -116
     },
-    "startDate": "2016-03-15",
+    "startDate": "2016-03-30",
     "startTime": 0,
     "seatsRequired": 1,
     "needRoundTrip": false,
@@ -98,6 +89,82 @@
     "bike": false,
     "wheelchair": false,
     "beenRated": false,
-    "state": "reserved",
-    "id": "2"
-}]
+    "state": "new",
+    "id": "3"      
+  },
+  {
+    "riderId": "2",
+    "startAddress": { "street": "123 Duck Lane", "city":"SD", "state": "CA", "zip": "90020"},
+    "startGeopoint": {
+      "lat": 32,
+      "lng": -117
+    },
+    "destAddress": { "street": "8 Main St.", "city":"Oceanside", "state": "CA", "zip": "94320"},
+    "destGeopoint": {
+      "lat": 33,
+      "lng": -116
+    },
+    "startDate": "2016-03-30",
+    "startTime": 0,
+    "seatsRequired": 1,
+    "needRoundTrip": false,
+    "sameGender": false,
+    "ageRange": "18-80",
+    "likesDogs": true,
+    "bike": false,
+    "wheelchair": false,
+    "beenRated": false,
+    "state": "pending",
+    "id": "4"      
+  },
+  {
+    "riderId": "2",
+    "startAddress": { "street": "123 Duck Lane", "city":"SD", "state": "CA", "zip": "90020"},
+    "startGeopoint": {
+      "lat": 32,
+      "lng": -117
+    },
+    "destAddress": { "street": "8 Main St.", "city":"Oceanside", "state": "CA", "zip": "94320"},
+    "destGeopoint": {
+      "lat": 33,
+      "lng": -116
+    },
+    "startDate": "2016-03-30",
+    "startTime": 0,
+    "seatsRequired": 1,
+    "needRoundTrip": false,
+    "sameGender": false,
+    "ageRange": "18-80",
+    "likesDogs": true,
+    "bike": false,
+    "wheelchair": false,
+    "beenRated": false,
+    "state": "pending",
+    "id": "5"      
+  },
+  {
+    "riderId": "2",
+    "startAddress": { "street": "123 Duck Lane", "city":"SD", "state": "CA", "zip": "90020"},
+    "startGeopoint": {
+      "lat": 32,
+      "lng": -117
+    },
+    "destAddress": { "street": "8 Main St.", "city":"Oceanside", "state": "CA", "zip": "94320"},
+    "destGeopoint": {
+      "lat": 33,
+      "lng": -116
+    },
+    "startDate": "2016-03-30",
+    "startTime": 0,
+    "seatsRequired": 1,
+    "needRoundTrip": false,
+    "sameGender": false,
+    "ageRange": "18-80",
+    "likesDogs": true,
+    "bike": false,
+    "wheelchair": false,
+    "beenRated": false,
+    "state": "started",
+    "id": "6"      
+  }
+]
