@@ -122,4 +122,35 @@
   "created": "2016-03-30",
   "lastUpdated": "2016-03-30",
   "id": "4"
+}, {
+  "logIP": "string",
+  "regIP": "string",
+  "logDate": "2016-03-30",
+  "regDate": "2016-03-30",
+  "firstName": "Arthur",
+  "lastName": "Dent",
+  "address": {
+    "street": "123 Duck Lane",
+    "city": "Fallbrook",
+    "state": "CA",
+    "zip": "90020"
+  },
+  "phone": "619-555-1221",
+  "photo": "",
+  "gender": "M",
+  "age": 35,
+  "facebookAccount": "string",
+  "language": "en",
+  "avgRating": 5,
+  "numRatings": 100,
+  "notifications": true,
+  "sameGender": true,
+  "ageRange": "20-40",
+  "likesDogs": true,
+  "email": "arthur@dent.com",
+  "password": "12345678aA!",
+  "status": "string",
+  "created": "2016-03-30",
+  "lastUpdated": "2016-03-30",
+  "id": "42"
 }]

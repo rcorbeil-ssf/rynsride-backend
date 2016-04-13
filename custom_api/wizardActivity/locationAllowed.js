@@ -18,7 +18,7 @@ module.exports = function(model) {
 		model.find({
 			where:
 				{startGeopoint:
-					{near:	{lat: 1, lng: 1}}}
+					{near:	geopoint}}
 		}, function(error, success){
 			getPostedTrips(success);
 		});
