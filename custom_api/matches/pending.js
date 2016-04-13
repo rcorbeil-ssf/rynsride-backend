@@ -66,7 +66,8 @@ module.exports = function(Matches, path, state, notes, model, typeId, method) {
                     else {
                         returnArray[indexNum].firstName = riderResponse[0].__data.firstName;
                         returnArray[indexNum].lastName = riderResponse[0].__data.lastName;
-                        returnArray[indexNum].photo = riderResponse[0].__data.photo;    
+                        returnArray[indexNum].photo = riderResponse[0].__data.photo;
+                        returnArray[indexNum].age = riderResponse[0].__data.age;
                         next();
                     }
                 });
