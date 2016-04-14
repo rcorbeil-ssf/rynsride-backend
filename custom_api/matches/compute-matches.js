@@ -4,15 +4,18 @@ module.exports = function(model) {
 // It searches for any matching RequestRides instances.  If any found, it adds an
 // instance to the Matches model.
 model.observe('after save', function(ctx, next) {
+
 	if (ctx.instance) {
 	  console.log('Saved %s#%s', ctx.Model.modelName, ctx.instance.id);
 	} else {
 	  console.log('Updated %s matching %j',
 	    ctx.Model.pluralModelName,
 	    ctx.where);
+	    return(""); // ignore coming into this hook after updating our own model (PostedTrips) below
 	}
 	var RideRequests = model.app.models.RideRequests;
 	var Matches = model.app.models.Matches;
+	var PostedTrips = model.app.models.PostedTrips;
 	
 	var async = require("async");
 	
@@ -67,6 +70,9 @@ model.observe('after save', function(ctx, next) {
 		// Create instance(s) in the Matches model
 		function createMatches(foundArray) {
 			async.forEachOf(foundArray, function (k, indexNum, next){
+
+				console.log('Match found for rideId' + k.id);
+				
 				var properties = {
 					tripId: ctx.instance.__data.id,
 					rideId: k.id,
@@ -83,16 +89,24 @@ model.observe('after save', function(ctx, next) {
 					}
 					else {
 						// Update state of RideRequest to 'matched'
-						var rrProperties = {
+						var stateProperty = {
 							state: "matched"
 						};
-						RideRequests.update({id: k.id},rrProperties, function(err, rRequest){
+						RideRequests.update({id: k.id},stateProperty, function(err, rRequest){
 							if(err) {
-								var error = new Error('Unable to update rideRequest too "matched"');
+								var error = new Error('Unable to update rideRequest to "matched"');
 								error.statusCode = 500;
 								next(error);								
 							} else {
-								next();
+								PostedTrips.update({id: ctx.instance.__data.id},stateProperty, function(err, pTrip){
+									if(err) {
+										var error = new Error('Unable to update postedTrip to "matched"');
+										error.statusCode = 500;
+										next(error);								
+									} else {
+										next();
+									}
+								});
 							}
 						});
 					}
