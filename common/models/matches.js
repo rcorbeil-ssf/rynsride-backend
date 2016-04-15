@@ -7,7 +7,5 @@ module.exports = function(Matches) {
     pendingApi(Matches, 'pending', 'pendDrCmt', 'Testing out notes', 'RideRequests', 'tripId', "post");
     pendingApi(Matches, 'driverReservedRide', 'reserved', 'returning committed riders', 'RideRequests', 'tripId', "get");
     pendingApi(Matches, 'riderMatchedRide', 'matched', 'matching rider with trip', 'PostedTrips', 'rideId', "get");
-    //historyRiderApi(Matches, path, notes, typeofid, method);
-    historyRiderResultsApi(Matches, 'historyRiderResults', 'Getting driver information for previous trip', 'rideId', "get");
-    
+    historyRiderResultsApi(Matches, 'historyRiderResults', "Returns driver Info & trip info", "rideId", "get");
 };
