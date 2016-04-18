@@ -3,19 +3,25 @@ module.exports = function(PostedTrips) {
 	PostedTrips.remoteMethod('getNames', {
         http: {getNames: '/getNames', verb: 'post'},
         accepts: [
-            {arg: 'geolocation', type: 'object', description: 'Location near trips.'}
+            {arg: 'geolocation', type: 'object', description: 'Location near trips.'},
+            {arg: 'userId', type: 'string', description: 'Driver of trip'}
         ],
-        notes: 'Hello World',
-        description: "I'm a description.",
+        // notes: 'Gets local trips based on geolocation',
+        // description: "I'm a description.",
         returns: {type: 'object', root: true}
     });
     // PostedTrips.getNames();
     
-    PostedTrips.getNames = function(geolocation, cb) {
+    PostedTrips.getNames = function(geolocation, userId, cb) {
     	PostedTrips.find({
 			where: {
+				//filter by nearest rides based on geopoint
 				startGeopoint:{
 					near: geolocation
+				},
+				//filter out driverId's of the current user neq(not equal)
+				driverId: {
+					neq: userId
 				}
 			}
 		}, function(tripErr, tripRes) {
