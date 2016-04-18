@@ -139,7 +139,7 @@
     "bike": false,
     "wheelchair": false,
     "beenRated": false,
-    "state": "pending",
+    "state": "reserved",
     "id": "5"      
   },
   {
