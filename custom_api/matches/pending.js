@@ -68,6 +68,7 @@ module.exports = function(Matches, path, state, notes, model, typeId, method) {
                         returnArray[indexNum].lastName = riderResponse[0].__data.lastName;
                         returnArray[indexNum].photo = riderResponse[0].__data.photo;
                         returnArray[indexNum].age = riderResponse[0].__data.age;
+                        returnArray[indexNum].gender = riderResponse[0].__data.gender;
                         next();
                     }
                 });
