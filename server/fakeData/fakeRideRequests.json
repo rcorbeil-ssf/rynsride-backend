@@ -8,7 +8,7 @@
     },
     "startGeopoint": {
         "lat": 32,
-        "lng": -117
+        "lng": -116
     },
     "destAddress": {
         "street": "8 Main St.",
@@ -17,11 +17,11 @@
         "zip": "94320"
     },
     "destGeopoint": {
-        "lat": 33,
+        "lat": 32,
         "lng": -116
     },
-    "startDate": "2016-03-19T00:00:00.001",
-    "startTime": 0,
+    "startDate": "2016-04-19T00:00:00.000",
+    "startTime": 32400000,
     "seatsRequired": 1,
     "needRoundTrip": false,
     "sameGender": false,
@@ -139,7 +139,7 @@
     "bike": false,
     "wheelchair": false,
     "beenRated": false,
-    "state": "pending",
+    "state": "reserved",
     "id": "5"      
   },
   {
