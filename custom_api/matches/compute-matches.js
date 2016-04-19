@@ -3,9 +3,7 @@ module.exports = function(PostedTrips) {
 // This custom API adds to the PostedTrips model.
 // It searches for any matching RequestRides instances.  If any found, it adds an
 // instance to the Matches model.
-PostedTrips.remoteMethod(
-    'postAndSearch',
-    {
+PostedTrips.remoteMethod('postAndSearch', {
     	http: {path: '/postAndSearch', verb: "post"},
         accepts: {arg: 'postedTrip', type: 'object'},
         description: "Posts the trip and searches for matching rides",
