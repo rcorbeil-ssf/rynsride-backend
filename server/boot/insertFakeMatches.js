@@ -4,10 +4,10 @@ module.exports = function(app) {
 
 	var Match = app.models.Matches;
 
-	Match.destroyAll();
+	// Match.destroyAll();
 
-	Match.create(jsonArr, function(err, record) {
-		if (err) return console.log(err);
-	});
+	// Match.create(jsonArr, function(err, record) {
+	// 	if (err) return console.log(err);
+	// });
 	console.log("fake Matches inserted successfully");
 };

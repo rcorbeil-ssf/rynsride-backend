@@ -4,12 +4,12 @@ module.exports = function(app) {
 
 	var RideRequest = app.models.RideRequests;
 
-	RideRequest.destroyAll();
+	// RideRequest.destroyAll();
 
 
-		RideRequest.create(jsonArr, function(err, record) {
-			if (err) return console.log(err);
-		});
+	// 	RideRequest.create(jsonArr, function(err, record) {
+	// 		if (err) return console.log(err);
+	// 	});
 
 	console.log("fake RideRequests inserted successfully");
 
