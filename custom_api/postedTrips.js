@@ -37,7 +37,7 @@ module.exports = function(PostedTrips) {
 					}
 				}, 
 				function(err, usersResponse){
-					if(err || usersResponse === undefined) {
+					if(err || usersResponse === undefined || usersResponse == null) {
 						var error = new Error('SSFUsers operation failed response error');
 						error.statusCode = 500;
 						cb(error);
