@@ -38,7 +38,7 @@ module.exports = function(PostedTrips) {
 					}
 				},function(err, usersResponse){
 					console.log(usersResponse);
-					if(err || usersResponse === undefined) {
+					if(err || usersResponse === undefined || usersResponse === null) {
 						var error = new Error('No trips available at this time.');
 						error.statusCode = 500;
 						next(error);
@@ -46,9 +46,9 @@ module.exports = function(PostedTrips) {
 					else {
 				        returnArray[indexNum].firstName = usersResponse.__data.firstName;
 				        returnArray[indexNum].lastName = usersResponse.__data.lastName;
-				        // returnArray[indexNum].photo = usersResponse.__data.photo;
-				        // returnArray[indexNum].age = usersResponse.__data.age;
-				        // returnArray[indexNum].gender = usersResponse.__data.gender;
+				        returnArray[indexNum].photo = usersResponse.__data.photo;
+				        returnArray[indexNum].age = usersResponse.__data.age;
+				        returnArray[indexNum].gender = usersResponse.__data.gender;
 				        next();
 					}
 				});

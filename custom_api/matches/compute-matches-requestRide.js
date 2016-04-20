@@ -136,5 +136,7 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 			}});
 		}	
 	}			
-}};
+}
+cb({});
+};
 };

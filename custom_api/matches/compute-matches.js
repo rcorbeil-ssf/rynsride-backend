@@ -137,5 +137,7 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 			});	
 		}	
 	}			
-}};
+}
+cb({});
+};
 };
