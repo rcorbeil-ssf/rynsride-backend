@@ -3,7 +3,7 @@ module.exports = function(PostedTrips) {
 	PostedTrips.remoteMethod('getNames', {
         http: {getNames: '/getNames', verb: 'post'},
         accepts: [
-            {arg: 'geolocation', type: 'object', description: 'Location near trips.'}
+            {arg: 'geolocation', type: 'geopoint', description: 'Location near trips.'}
         ],
         notes: 'Hello World',
         description: "I'm a description.",
@@ -12,24 +12,25 @@ module.exports = function(PostedTrips) {
     // PostedTrips.getNames();
     
     PostedTrips.getNames = function(geolocation, cb) {
+    	var SSFUsers = PostedTrips.app.models.SSFUsers;
     	PostedTrips.find({
 			where: {
 				startGeopoint:{
 					near: geolocation
 				}
 			}
-		}, function(tripErr, tripRes) {
+		}, function(tripErr, success) {
 			if(tripErr) {
 				var error = new Error('SSFUsers operation failed response error');
 				error.statusCode = 500;
 				cb(error);
 			} else {
-				getDrivers(tripRes);
+				getDrivers(success);
 			}
 		});
 		
 		function getDrivers(returnArray) {
-			var SSFUsers = PostedTrips.app.models.SSFUsers;
+			
             async.forEachOf(returnArray, function (k, indexNum, next){
 				SSFUsers.findOne({
 					where: {
@@ -40,7 +41,7 @@ module.exports = function(PostedTrips) {
 					if(err || usersResponse === undefined) {
 						var error = new Error('SSFUsers operation failed response error');
 						error.statusCode = 500;
-						cb(error);
+						next(error);
 					}
 					else {
 				        returnArray[indexNum].firstName = usersResponse.__data.firstName;
