@@ -49,8 +49,8 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 		console.log(startDate);
 		requestedRide.startDate = startDate;
 		
-		THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
-		PICKUP_RADIUS = 5; // miles
+		var THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
+		var PICKUP_RADIUS = 5; // miles
 		
 		console.log(requestedRide.pickupTime);
 		console.log(requestedRide.pickupTime + THIRTY_MINUTES);
@@ -136,5 +136,7 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 			}});
 		}	
 	}			
-}};
+}
+cb({});
+};
 };

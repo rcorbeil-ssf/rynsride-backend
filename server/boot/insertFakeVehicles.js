@@ -6,11 +6,11 @@
 
 // 	Vehicles.destroyAll();
 
-// 	// // // jsonArr.forEach(function(jsonArr){
-// 	// // 	Vehicles.create(jsonArr, function(err, record) {
-// 	// // 		if (err) return console.log(err);
-// 	// // 	});
-// 	// // });
-// 	// console.log("fake Vehicles inserted successfully");
+// // 	// jsonArr.forEach(function(jsonArr){
+// // 		Vehicles.create(jsonArr, function(err, record) {
+// // 			if (err) return console.log(err);
+// // 		});
+// // 	// });
+// // 	console.log("fake Vehicles inserted successfully");
 
 // };

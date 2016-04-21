@@ -1,23 +1,25 @@
-var async = require("async");
 module.exports = function(PostedTrips) {
 	PostedTrips.remoteMethod('getNames', {
-        http: {getNames: '/getNames', verb: 'post'},
+        http: {path: '/getNames', verb: 'post'},
         accepts: [
-            {arg: 'geolocation', type: 'geopoint', description: 'Location near trips.'}
+            {arg: 'geolocation', type: 'object', description: 'Location near trips.'},
+            {arg: 'userId', type: 'string', description: 'Driver of trip'}
         ],
-        notes: 'Hello World',
-        description: "I'm a description.",
+        // notes: 'Gets local trips based on geolocation',
+        // description: "I'm a description.",
         returns: {type: 'object', root: true}
     });
     // PostedTrips.getNames();
     
-    PostedTrips.getNames = function(geolocation, cb) {
-    	var SSFUsers = PostedTrips.app.models.SSFUsers;
+    PostedTrips.getNames = function(geolocation, userId, cb) {
+			var async = require("async");
+			var SSFUsers = PostedTrips.app.models.SSFUsers;
     	PostedTrips.find({
 			where: {
-				startGeopoint:{
-					near: geolocation
-				}
+				//filter by nearest rides based on geopoint
+				startGeopoint: {near: geolocation},
+				//filter out driverId's of the current user neq(not equal)
+				driverId: {neq: userId}
 			}
 		}, function(tripErr, success) {
 			if(tripErr) {
@@ -28,7 +30,6 @@ module.exports = function(PostedTrips) {
 				getDrivers(success);
 			}
 		});
-		
 		function getDrivers(returnArray) {
 			
             async.forEachOf(returnArray, function (k, indexNum, next){
@@ -36,10 +37,10 @@ module.exports = function(PostedTrips) {
 					where: {
 						id: k.driverId
 					}
-				}, 
-				function(err, usersResponse){
-					if(err || usersResponse === undefined) {
-						var error = new Error('SSFUsers operation failed response error');
+				},function(err, usersResponse){
+					console.log(usersResponse);
+					if(err || usersResponse === undefined || usersResponse === null) {
+						var error = new Error('No trips available at this time.');
 						error.statusCode = 500;
 						next(error);
 					}
@@ -60,8 +61,6 @@ module.exports = function(PostedTrips) {
             	} 
             	cb(0, returnArray);
             });
-			
 		}
     };
-	
 };

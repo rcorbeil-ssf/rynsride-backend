@@ -1,12 +1,16 @@
+//discreptency #1 the 'path' passed in does not match exactly what is passed in if it were to be different than "rideId" on line 27:17
+//discreptency #2 what the heck is this: .limit(1) on line 47:16, 66:19, and 81:19
+//discreptency #3 line 55 is weird
+//discreptency #4 you're never calling the cb    
 module.exports = function(Matches, path, notes, rideId, method) {
     //instantiates what the method is
     Matches.remoteMethod(path, {
-        http: {path: '/'+path+'/', verb: method},
+        http: {path: '/'+path, verb: method},
         accepts: [
             {arg: rideId, type: 'string', description: 'An object for filtering matches.'}
         ],
         notes: notes,
-        description: "Returns a partial results list of the query.",
+        description: "Returns one result.",
         returns: {type: 'object', root: true}
     });
     //what it actually does    
@@ -20,22 +24,20 @@ module.exports = function(Matches, path, notes, rideId, method) {
         var selectedPostedTrip;
         var tempObj = {
             where:{
-                rideId: passedId
+                rideId: passedId, //discreptency #1
+                or: [
+                    {state: "started"}, 
+                    {state: "ended"}
+                     ]
             }
         };
-        Matches.findOne(tempObj, function(error, success) {
-            if (error){
-                var err = new Error('unable to find matching match object in matches model. match. match. match. match.');
-                err.statusCode=500;
-            } else {
+        Matches.find(tempObj, function(error, success){
                 getDriverId(success);
-                return driver;
-            }
         });
         function getDriverId(matchesArray) {
-            	 postedTrips.findOne({
+            	 postedTrips.find({
             		where: {
-            			id: matchesArray.tripId
+            			id: matchesArray[0].tripId
             		}
             	},function(err, rideResponse) {
             		if(err) {
@@ -43,16 +45,16 @@ module.exports = function(Matches, path, notes, rideId, method) {
             			error.statusCode = 500;
             		}
             		else {
-            		    selectedPostedTrip = rideResponse;
+            		    selectedPostedTrip = rideResponse[0];
             			getDriverInfo(selectedPostedTrip.driverId);
             		}
-            	});
+            	}); //discreptency #2
         }
         
         // This function is used to get the User Model pertaining to
         // the driver of the selected trip, using his driver Id.
         function getDriverInfo(userId){
-                Users.findOne({
+                Users.find({
                     where: {
                         id: userId
                     }
@@ -62,15 +64,16 @@ module.exports = function(Matches, path, notes, rideId, method) {
             			error.statusCode = 500;
                     }
                     else {
-                        driver = driverResponse;
-                        //getVehicleInfo(selectedPostedTrip.vehicleId);
+                        driver = driverResponse[0];
+                        getVehicleInfo(driver.id);
+                        console.log(driverResponse);
                     }
                 });
         }
-        function getVehicleInfo(vehicleId){
-                Vehicles.findOne({
+        function getVehicleInfo(driverId){
+                Vehicles.find({
                     where: {
-                        id: vehicleId
+                        userId: driverId
                     }
                 },function(err, vehicleResponse){
                     if(err){
@@ -78,7 +81,8 @@ module.exports = function(Matches, path, notes, rideId, method) {
             			error.statusCode = 500;
                     }
                     else {
-                        vehicle = vehicleResponse;
+                        vehicle = vehicleResponse[0];
+                        cb(0, {driver: driver, vehicle: vehicle});
                     }
                 });
         }   

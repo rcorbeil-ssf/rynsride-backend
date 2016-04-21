@@ -29,6 +29,15 @@
     "dateStamp": "2016-03-30",
     "updateStamp": "2016-03-30",
     "date": "2016-03-30",
-    "state": "matched"
+    "state": "ended"
+  },
+  {
+    "tripId": "2",
+    "rideId": "2",
+    "dateStamp": "2016-03-30T00:00:00.000Z",
+    "state": "matched",
+    "id": "5715522ea977855c5bebd15b",
+    "updateStamp": "2016-03-30",
+    "date": "2016-03-30"
   }
 ]

@@ -3,9 +3,7 @@ module.exports = function(PostedTrips) {
 // This custom API adds to the PostedTrips model.
 // It searches for any matching RequestRides instances.  If any found, it adds an
 // instance to the Matches model.
-PostedTrips.remoteMethod(
-    'postAndSearch',
-    {
+PostedTrips.remoteMethod('postAndSearch', {
     	http: {path: '/postAndSearch', verb: "post"},
         accepts: {arg: 'postedTrip', type: 'object'},
         description: "Posts the trip and searches for matching rides",
@@ -50,7 +48,7 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 		console.log(startDate);
 		postedTrip.startDate = startDate;
 		
-		THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
+		var THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
 		
 		console.log(postedTrip.startTime);
 		console.log(postedTrip.startTime + THIRTY_MINUTES);
@@ -139,5 +137,7 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 			});	
 		}	
 	}			
-}};
+}
+cb({});
+};
 };

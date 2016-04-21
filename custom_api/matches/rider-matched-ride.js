@@ -1,4 +1,4 @@
-module.exports = function(Matches, path, state, notes, model, typeId, method, targetProperty, targetUser) {
+module.exports = function(Matches, path, state, notes, model, typeId, method) {
     //instantiates what the method is
     Matches.remoteMethod(path, {
         http: {path: '/'+path, verb: method},
@@ -22,13 +22,13 @@ module.exports = function(Matches, path, state, notes, model, typeId, method, ta
         };
         tempObj.where[typeId] = passedId;
         Matches.find(tempObj, function(error, success) {
-            getRideRequests(success);
+            getMatchedTrips(success);
         });
-        function getRideRequests(returnArray) {
+        function getMatchedTrips(returnArray) {
             async.forEachOf(returnArray, function (k, indexNum, next) {
             	 targetModel.find({
             		where: {
-            			id: k.__data[targetProperty]
+            			id: k.__data['tripId']
             		}
             	},function(err, rideResponse) {
             		if(err) {
@@ -47,28 +47,28 @@ module.exports = function(Matches, path, state, notes, model, typeId, method, ta
             		error.statusCode = 500;
             		cb(error);
             	} 
-            	getUsersCommited(returnArray);
+            	getDriverInfo(returnArray);
             });
         }
         
-        function getUsersCommited(returnArray){
+        function getDriverInfo(returnArray){
             async.forEachOf(returnArray, function (k, indexNum, next){
                 Users.find({
                     where: {
-                        id: k.__data[targetUser]
+                        id: k.__data.driverId
                     }
-                },function(err, riderResponse){
+                },function(err, driverResponse){
                     if(err){
                         var error = new Error('async.forEach operation failed');
             			error.statusCode = 500;
             			next(error);
                     }
                     else {
-                        returnArray[indexNum].firstName = riderResponse[0].__data.firstName;
-                        returnArray[indexNum].lastName = riderResponse[0].__data.lastName;
-                        returnArray[indexNum].photo = riderResponse[0].__data.photo;
-                        returnArray[indexNum].age = riderResponse[0].__data.age;
-                        returnArray[indexNum].gender = riderResponse[0].__data.gender;
+                        returnArray[indexNum].firstName = driverResponse[0].__data.firstName;
+                        returnArray[indexNum].lastName = driverResponse[0].__data.lastName;
+                        returnArray[indexNum].photo = driverResponse[0].__data.photo;
+                        returnArray[indexNum].age = driverResponse[0].__data.age;
+                        returnArray[indexNum].gender = driverResponse[0].__data.gender;
                         next();
                     }
                 });
