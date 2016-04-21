@@ -7,7 +7,7 @@ PostedTrips.remoteMethod('postAndSearch', {
     	http: {path: '/postAndSearch', verb: "post"},
         accepts: {arg: 'postedTrip', type: 'object'},
         description: "Posts the trip and searches for matching rides",
-        returns: {arg: 'computedData', type: 'object'}
+        //returns: {arg: 'computedData', type: 'object'}
     });
     
 PostedTrips.postAndSearch = function(postedTrip, cb) {
@@ -34,19 +34,9 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
         	console.log(error);
         	cb(error);
 	} else {
-		// Remove the HH:MM:SS from the startDate of trip before posting.
-		var mSecs = Date.parse(postedTrip.startDate);
-		var date = new Date();
-		date.setTime(mSecs);
-		
-		var year = date.getUTCFullYear();
-		var month = date.getUTCMonth();
-		var day = date.getUTCDate();
-		var startDate = new Date();
-		// convert to UTC format, lose hrs, min, secs
-		startDate.setTime(Date.UTC(year, month, day));
+		// convert string to Date object
+		var startDate = new Date(postedTrip.startDate);
 		console.log(startDate);
-		postedTrip.startDate = startDate;
 		
 		var THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
 		
@@ -69,6 +59,7 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 					{state: "matched"}
 				   ],
 				startDate: startDate,
+				riderId: {neq: postedTrip.driverId},
 				and:[
 				 	{pickupTime: {gte:  postedTrip.startTime - THIRTY_MINUTES}},
 				 	{pickupTime: {lte:  postedTrip.startTime + THIRTY_MINUTES}}
@@ -80,9 +71,6 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 		
 		// Create instance(s) in the Matches model
 		function createMatches(foundArray) {
-			if(foundArray.length > 0){
-				postedTrip.state = "matched";
-			}
 			
 			PostedTrips.create(postedTrip, function(err, pTrip){
 				if(err) {
@@ -90,7 +78,6 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 					error.statusCode = 500;
 					//cb(error);								
 				} else{
-			
 					async.forEachOf(foundArray, function (k, indexNum, next){
 		
 						console.log('Match found: rideId ' + k.id);
@@ -138,6 +125,6 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 		}	
 	}			
 }
-cb({});
+cb();
 };
 };
