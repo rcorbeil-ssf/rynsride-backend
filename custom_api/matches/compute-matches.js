@@ -61,8 +61,8 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 				startDate: startDate,
 				riderId: {neq: postedTrip.driverId},
 				and:[
-				 	{pickupTime: {gte:  postedTrip.startTime - THIRTY_MINUTES}},
-				 	{pickupTime: {lte:  postedTrip.startTime + THIRTY_MINUTES}}
+				 	{startTime: {gte:  postedTrip.startTime - THIRTY_MINUTES}},
+				 	{startTime: {lte:  postedTrip.startTime + THIRTY_MINUTES}}
 				    ]					
 			}
 		}, function(error, success){

@@ -55,7 +55,7 @@ curl -X POST --header "Content-Type: application/json" --header "Accept: applica
     "lng": -117
   },
   "startDate": "2016-04-08",
-  "pickupTime": 1800000,
+  "startTime": 1800000,
   "seatsRequired": 1,
   "needRoundTrip": true,
   "sameGender": true,
