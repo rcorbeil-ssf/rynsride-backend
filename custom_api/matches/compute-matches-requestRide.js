@@ -29,7 +29,7 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 	if( requestedRide.startGeopoint == undefined ||
 		requestedRide.destGeopoint == undefined ||
 		requestedRide.startDate == undefined ||
-		requestedRide.pickupTime == undefined) {
+		requestedRide.startTime == undefined) {
 			var error = new Error('Invalid input arguments to requestedRide');
         	error.statusCode = 500;
         	console.log(error);
@@ -41,9 +41,9 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 		var THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
 		var PICKUP_RADIUS = 5; // miles
 		
-		console.log(requestedRide.pickupTime);
-		console.log(requestedRide.pickupTime + THIRTY_MINUTES);
-		console.log(requestedRide.pickupTime - THIRTY_MINUTES);
+		console.log(requestedRide.startTime);
+		console.log(requestedRide.startTime + THIRTY_MINUTES);
+		console.log(requestedRide.startTime - THIRTY_MINUTES);
 		
 		PostedTrips.find({
 			where:{
@@ -62,8 +62,8 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 				startDate: startDate,
 				driverId: {neq: requestedRide.riderId},
 				and:[
-				 	{startTime: {gte:  requestedRide.pickupTime - THIRTY_MINUTES}},
-				 	{startTime: {lte:  requestedRide.pickupTime + THIRTY_MINUTES}}
+				 	{startTime: {gte:  requestedRide.startTime - THIRTY_MINUTES}},
+				 	{startTime: {lte:  requestedRide.startTime + THIRTY_MINUTES}}
 				    ]					
 			}
 		}, function(error, success){

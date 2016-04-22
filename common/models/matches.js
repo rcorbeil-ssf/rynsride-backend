@@ -5,7 +5,7 @@ var historyRiderResultsApi= require('../../custom_api/matches/history-rider-resu
 var rideMatchedRideApi = require('../../custom_api/matches/rider-matched-ride.js');
 module.exports = function(Matches) {
     
-    driverReservedRideApi(Matches);
+    //driverReservedRideApi(Matches);
     // pendingApi === new orbiting-like function... good luck.
     // pendingApi(Matches, path, state, notes, model, typeofid, method);
     pendingApi(Matches, 'riderPendingRide', 'pending',  'Testing out notes', 'PostedTrips', 'rideId', "post", 'tripId', 'driverId');
@@ -16,7 +16,7 @@ module.exports = function(Matches) {
     
     pendingApi(Matches, 'driverPendingRide', 'pending',  'Testing out notes', 'RideRequests', 'tripId', "post", 'rideId', 'riderId');
     
-    pendingApi(Matches, 'driverReservedRide', 'reserved', 'returning committed riders', 'RideRequests', 'tripId', "post", 'rideId', 'riderId');
+    pendingApi(Matches, 'driverReservedRide', 'reserved', 'returning committed riders', 'RideRequests', 'tripId', "get", 'rideId', 'riderId');
     
     //historyRiderApi(Matches, path, notes, typeofid, method);
     historyRiderResultsApi(Matches, 'historyRiderResults', 'Getting driver information for previous trip', 'rideId', "get");
