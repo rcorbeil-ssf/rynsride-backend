@@ -1,4 +1,4 @@
-module.exports = function(Matches, path, state, notes, model, typeId, method) {
+module.exports = function(Matches, path, state, notes, model, typeId, method, targetProperty, targetUser) {
     //instantiates what the method is
     Matches.remoteMethod(path, {
         http: {path: '/'+path, verb: method},
@@ -28,7 +28,7 @@ module.exports = function(Matches, path, state, notes, model, typeId, method) {
             async.forEachOf(returnArray, function (k, indexNum, next) {
             	 targetModel.find({
             		where: {
-            			id: k.__data[typeId]
+            			id: k.__data[targetProperty]
             		}
             	},function(err, rideResponse) {
             		if(err) {
@@ -55,7 +55,7 @@ module.exports = function(Matches, path, state, notes, model, typeId, method) {
             async.forEachOf(returnArray, function (k, indexNum, next){
                 Users.find({
                     where: {
-                        id: k.__data.riderId
+                        id: k.__data[targetUser]
                     }
                 },function(err, riderResponse){
                     if(err){

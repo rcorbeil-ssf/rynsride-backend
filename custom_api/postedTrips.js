@@ -13,6 +13,7 @@ module.exports = function(PostedTrips) {
     
     PostedTrips.getNames = function(geolocation, userId, cb) {
 			var async = require("async");
+			var SSFUsers = PostedTrips.app.models.SSFUsers;
     	PostedTrips.find({
 			where: {
 				//filter by nearest rides based on geopoint
@@ -30,7 +31,7 @@ module.exports = function(PostedTrips) {
 			}
 		});
 		function getDrivers(returnArray) {
-			var SSFUsers = PostedTrips.app.models.SSFUsers;
+			
             async.forEachOf(returnArray, function (k, indexNum, next){
 				SSFUsers.findOne({
 					where: {

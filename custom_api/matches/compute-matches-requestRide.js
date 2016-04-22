@@ -9,7 +9,7 @@ RideRequests.remoteMethod(
     	http: {path: '/requestRideAndSearch', verb: "post"},
         accepts: {arg: 'requestedRide', type: 'object'},
         description: "Requests the ride and searches for matching rides",
-        returns: {arg: 'computedData', type: 'object'}
+        //returns: {arg: 'computedData', type: 'object'}
     });
     
 RideRequests.requestRideAndSearch = function(requestedRide, cb) {
@@ -35,22 +35,11 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
         	console.log(error);
         	cb(error);
 	} else {
-		// Remove the HH:MM:SS from the startDate of trip before posting.
-		var mSecs = Date.parse(requestedRide.startDate);
-		var date = new Date();
-		date.setTime(mSecs);
+		// convert string to Date object
+		var startDate = new Date(requestedRide.startDate);
 		
-		var year = date.getUTCFullYear();
-		var month = date.getUTCMonth();
-		var day = date.getUTCDate();
-		var startDate = new Date();
-		// convert to UTC format, lose hrs, min, secs
-		startDate.setTime(Date.UTC(year, month, day));
-		console.log(startDate);
-		requestedRide.startDate = startDate;
-		
-		THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
-		PICKUP_RADIUS = 5; // miles
+		var THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
+		var PICKUP_RADIUS = 5; // miles
 		
 		console.log(requestedRide.pickupTime);
 		console.log(requestedRide.pickupTime + THIRTY_MINUTES);
@@ -71,6 +60,7 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 					{state: "matched"}
 				   ],
 				startDate: startDate,
+				driverId: {neq: requestedRide.riderId},
 				and:[
 				 	{startTime: {gte:  requestedRide.pickupTime - THIRTY_MINUTES}},
 				 	{startTime: {lte:  requestedRide.pickupTime + THIRTY_MINUTES}}
@@ -111,19 +101,7 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 							next(error);
 						}
 						else {
-							// Update state of PostedTrips to 'matched'
-							var stateProperty = {
-								state: "matched"
-							};
-							PostedTrips.update({id: k.id},stateProperty, function(err, pTrip){
-								if(err) {
-									var error = new Error('Unable to update requestRide to "matched"');
-									error.statusCode = 500;
-									next(error);								
-								} else {
-									next();
-								}
-							});
+							next();
 						}
 					});
 				}, function(err) {
@@ -137,6 +115,6 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 		}	
 	}			
 }
-cb({});
+cb();
 };
 };
