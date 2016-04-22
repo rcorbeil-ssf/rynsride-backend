@@ -23,16 +23,20 @@ module.exports = function(Matches, path, notes, rideId, method) {
         var vehicle;
         var selectedPostedTrip;
         var tempObj = {
-            where:{
-                rideId: passedId, //discreptency #1
-                or: [
-                    {state: "started"}, 
-                    {state: "ended"}
-                     ]
-            }
+            where:{rideId: passedId}, //discreptency #1
+            or: [
+                {state: "started"}, 
+                {state: "ended"}
+                ]
         };
         Matches.find(tempObj, function(error, success){
-                getDriverId(success);
+                if (error){
+                    var err = new Error('Error: Need more vespene gas');
+                    err.statusCode = 500;
+                } else {
+                    console.log(success);
+                    getDriverId(success);   
+                }
         });
         function getDriverId(matchesArray) {
             	 postedTrips.find({
@@ -82,7 +86,7 @@ module.exports = function(Matches, path, notes, rideId, method) {
                     }
                     else {
                         vehicle = vehicleResponse[0];
-                        cb(0, {driver: driver, vehicle: vehicle});
+                        cb(0, {driver: driver, vehicle: vehicle, trip: selectedPostedTrip});
                     }
                 });
         }   
