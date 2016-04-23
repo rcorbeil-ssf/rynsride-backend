@@ -41,7 +41,7 @@ module.exports = function(Vehicles) {
                 var userId = (fileObj.fields.userId[0]);
                 var fileInfo = fileObj.files.file[0];
                 var URI = "https://" + ctx.req.headers.host + CONTAINERS_URL+fileInfo.name;
-                Vehicles.update({driverId: userId}, {
+                Vehicles.update({userId: userId}, {
                     photo: URI
                 }, function(err, affected, resp) {
                 });
