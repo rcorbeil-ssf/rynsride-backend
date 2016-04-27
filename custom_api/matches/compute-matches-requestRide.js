@@ -73,7 +73,9 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 		// Create instance(s) in the Matches model
 		function createMatches(foundArray) {
 			if(foundArray.length > 0){
-				requestedRide.state = "matched";
+				if(requestedRide.state != "pending"){
+					requestedRide.state = "matched";
+				}
 			}
 			RideRequests.create(requestedRide, function(err, pRide){
 				if(err) {
@@ -91,7 +93,7 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 						tripId: k.id,
 						dateStamp: startDate,
 						updateStamp: new Date(),
-						state: "matched"
+						state: requestedRide.state
 					};
 					
 					Matches.create(properties, function(err, match){

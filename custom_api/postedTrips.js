@@ -12,14 +12,18 @@ module.exports = function(PostedTrips) {
     // PostedTrips.getNames();
     
     PostedTrips.getNames = function(geolocation, userId, cb) {
-			var async = require("async");
-			var SSFUsers = PostedTrips.app.models.SSFUsers;
+		var async = require("async");
+		var SSFUsers = PostedTrips.app.models.SSFUsers;
     	PostedTrips.find({
 			where: {
 				//filter by nearest rides based on geopoint
 				startGeopoint: {near: geolocation},
 				//filter out driverId's of the current user neq(not equal)
-				driverId: {neq: userId}
+				driverId: {neq: userId},
+				or:[	
+					{state: "new"},
+					{state: "matched"}
+				   ]
 			}
 		}, function(tripErr, success) {
 			if(tripErr) {
@@ -33,7 +37,7 @@ module.exports = function(PostedTrips) {
 		function getDrivers(returnArray) {
 			
             async.forEachOf(returnArray, function (k, indexNum, next){
-				SSFUsers.findOne({
+				SSFUsers.find({
 					where: {
 						id: k.driverId
 					}
@@ -44,14 +48,15 @@ module.exports = function(PostedTrips) {
 						error.statusCode = 500;
 						next(error);
 					}
-					else {
-				        returnArray[indexNum].firstName = usersResponse.__data.firstName;
-				        returnArray[indexNum].lastName = usersResponse.__data.lastName;
-				        returnArray[indexNum].photo = usersResponse.__data.photo;
-				        returnArray[indexNum].age = usersResponse.__data.age;
-				        returnArray[indexNum].gender = usersResponse.__data.gender;
-				        next();
-					}
+					else if(usersResponse.length > 0){
+						returnArray[indexNum].firstName = usersResponse[0].__data.firstName;
+						returnArray[indexNum].lastName = usersResponse[0].__data.lastName;
+						returnArray[indexNum].photo = usersResponse[0].__data.photo;
+						returnArray[indexNum].age = usersResponse[0].__data.age;
+						returnArray[indexNum].gender = usersResponse[0].__data.gender;
+						};
+					next();
+					
 				});
             },function(err){
                 if(err){
