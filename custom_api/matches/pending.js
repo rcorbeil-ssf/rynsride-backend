@@ -3,7 +3,7 @@ module.exports = function(Matches, path, state, notes, model, typeId, method, ta
     Matches.remoteMethod(path, {
         http: {path: '/'+path, verb: method},
         accepts: [
-            {arg: typeId, type: 'string', description: 'An object for filtering matches.'}
+            {arg: 'passedId', type: 'string', description: 'An object for filtering matches.'}
         ],
         notes: notes,
         description: "Returns a partial results list of the query.",
@@ -52,7 +52,19 @@ module.exports = function(Matches, path, state, notes, model, typeId, method, ta
         }
         
         function getUsersCommited(returnArray){
+            if(returnArray == undefined){
+                var error = new Error('returnArray undefined');
+                error.statusCode = 500;
+                cb(error);  
+                return;
+            }
             async.forEachOf(returnArray, function (k, indexNum, next){
+                if(k == undefined){
+                    var error = new Error('returnArray k undefined');
+                    error.statusCode = 500;
+                    cb(error);  
+                    return;
+                }
                 Users.find({
                     where: {
                         id: k.__data[targetUser]
@@ -69,6 +81,10 @@ module.exports = function(Matches, path, state, notes, model, typeId, method, ta
                         returnArray[indexNum].photo = riderResponse[0].__data.photo;
                         returnArray[indexNum].age = riderResponse[0].__data.age;
                         returnArray[indexNum].gender = riderResponse[0].__data.gender;
+                        returnArray[indexNum].ageRange = riderResponse[0].__data.ageRange;
+                        returnArray[indexNum].sameSexOnly = riderResponse[0].__data.sameSexOnly;
+                        returnArray[indexNum].likesDogs = riderResponse[0].__data.likesDogs;
+                        returnArray[indexNum].cellPhone = riderResponse[0].__data.cellPhone;
                         next();
                     }
                 });

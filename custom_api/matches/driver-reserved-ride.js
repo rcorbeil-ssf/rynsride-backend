@@ -3,7 +3,7 @@ module.exports = function(Matches) {
     Matches.remoteMethod("driverReservedRide", {
         http: {"driverReservedRide": '/'+"driverReservedRide", verb: "get"},
         accepts: [
-            {arg: "tripId", type: 'string', description: 'An object for filtering matches.'}
+            {arg: "passedId", type: 'string', description: 'An object for filtering matches.'}
         ],
         notes: "returning committed riders",
         description: "Returns a partial results list of the query.",

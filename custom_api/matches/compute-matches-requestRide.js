@@ -36,14 +36,15 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
         	cb(error);
 	} else {
 		// convert string to Date object
-		var startDate = new Date(requestedRide.startDate);
+		//var startDate = new Date(requestedRide.startDate);
+		
+		// convert UTC string to local Date object
+		var startDateLocal = new Date(requestedRide.startDate);
+		startDateLocal.setHours(0);
+		var startDateTime = startDateLocal.getTime() + requestedRide.startTime;		
 		
 		var THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
 		var PICKUP_RADIUS = 5; // miles
-		
-		console.log(requestedRide.startTime);
-		console.log(requestedRide.startTime + THIRTY_MINUTES);
-		console.log(requestedRide.startTime - THIRTY_MINUTES);
 		
 		PostedTrips.find({
 			where:{
@@ -59,12 +60,16 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 					{state: "new"},
 					{state: "matched"}
 				   ],
-				startDate: startDate,
+				//startDate: startDate,
 				driverId: {neq: requestedRide.riderId},
+				// and:[
+				//  	{startTime: {gte:  requestedRide.startTime - THIRTY_MINUTES}},
+				//  	{startTime: {lte:  requestedRide.startTime + THIRTY_MINUTES}}
+				//     ]
 				and:[
-				 	{startTime: {gte:  requestedRide.startTime - THIRTY_MINUTES}},
-				 	{startTime: {lte:  requestedRide.startTime + THIRTY_MINUTES}}
-				    ]					
+				 	{startDateTime: {gte:  startDateTime - THIRTY_MINUTES}},
+				 	{startDateTime: {lte:  startDateTime + THIRTY_MINUTES}}
+				    ]
 			}
 		}, function(error, success){
 			createMatches(success);
@@ -77,6 +82,9 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 					requestedRide.state = "matched";
 				}
 			}
+			
+			requestedRide.startDateTime = startDateTime;
+			
 			RideRequests.create(requestedRide, function(err, pRide){
 				if(err) {
 					var error = new Error('Unable to create requestedRide');
@@ -91,7 +99,7 @@ RideRequests.requestRideAndSearch = function(requestedRide, cb) {
 					var properties = {
 						rideId: pRide.id,
 						tripId: k.id,
-						dateStamp: startDate,
+						dateStamp: startDateTime,
 						updateStamp: new Date(),
 						state: requestedRide.state
 					};

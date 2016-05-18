@@ -34,15 +34,12 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
         	console.log(error);
         	cb(error);
 	} else {
-		// convert string to Date object
-		var startDate = new Date(postedTrip.startDate);
-		console.log(startDate);
+		// convert UTC string to local Date object
+		var startDateLocal = new Date(postedTrip.startDate);
+		startDateLocal.setHours(0);
+		var startDateTime = startDateLocal.getTime() + postedTrip.startTime;
 		
 		var THIRTY_MINUTES = 30 * 60 * 1000;  // milliseconds
-		
-		console.log(postedTrip.startTime);
-		console.log(postedTrip.startTime + THIRTY_MINUTES);
-		console.log(postedTrip.startTime - THIRTY_MINUTES);
 		
 		RideRequests.find({
 			where:{
@@ -58,12 +55,16 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 					{state: "new"},
 					{state: "matched"}
 				   ],
-				startDate: startDate,
 				riderId: {neq: postedTrip.driverId},
+				// startDate: startDate,
+				// and:[
+				//  	{startTime: {gte:  postedTrip.startTime - THIRTY_MINUTES}},
+				//  	{startTime: {lte:  postedTrip.startTime + THIRTY_MINUTES}}
+				//     ]	
 				and:[
-				 	{startTime: {gte:  postedTrip.startTime - THIRTY_MINUTES}},
-				 	{startTime: {lte:  postedTrip.startTime + THIRTY_MINUTES}}
-				    ]					
+				 	{startDateTime: {gte:  startDateTime - THIRTY_MINUTES}},
+				 	{startDateTime: {lte:  startDateTime + THIRTY_MINUTES}}
+				    ]
 			}
 		}, function(error, success){
 			createMatches(success);
@@ -71,6 +72,8 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 		
 		// Create instance(s) in the Matches model
 		function createMatches(foundArray) {
+			
+			postedTrip.startDateTime = startDateTime;
 			
 			PostedTrips.create(postedTrip, function(err, pTrip){
 				if(err) {
@@ -86,7 +89,7 @@ PostedTrips.postAndSearch = function(postedTrip, cb) {
 						var properties = {
 							tripId: pTrip.id,
 							rideId: k.id,
-							dateStamp: startDate,
+							dateStamp: startDateTime,
 							updateStamp: new Date(),
 							state: "matched"
 						};

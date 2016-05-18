@@ -3,17 +3,21 @@ module.exports = function(PostedTrips) {
         http: {path: '/getNames', verb: 'post'},
         accepts: [
             {arg: 'geolocation', type: 'object', description: 'Location near trips.'},
-            {arg: 'userId', type: 'string', description: 'Driver of trip'}
+            {arg: 'userId', type: 'string', description: 'Driver of trip'},
+            {arg: 'timeZoneOffset', type: 'number', description: 'timeZoneOffset of trip start'},
+            {arg: 'timeNow', type: 'number', description: 'time now of client'},
         ],
         // notes: 'Gets local trips based on geolocation',
         // description: "I'm a description.",
         returns: {type: 'object', root: true}
     });
-    // PostedTrips.getNames();
     
-    PostedTrips.getNames = function(geolocation, userId, cb) {
+    PostedTrips.getNames = function(geolocation, userId, timeZoneOffset, nowDateTime, cb) {
 		var async = require("async");
 		var SSFUsers = PostedTrips.app.models.SSFUsers;
+		
+		var nowDateTimeAdjusted = nowDateTime + (3600000); //add 1 hr to account for discrepancy between PST,PDT
+		
     	PostedTrips.find({
 			where: {
 				//filter by nearest rides based on geopoint
@@ -23,8 +27,12 @@ module.exports = function(PostedTrips) {
 				or:[	
 					{state: "new"},
 					{state: "matched"}
-				   ]
-			}
+				  ],
+				startDateTime: {gt: nowDateTimeAdjusted},
+				timeZoneOffset: timeZoneOffset
+			},
+			order: 'startDateTime ASC'
+			//limit: 10
 		}, function(tripErr, success) {
 			if(tripErr) {
 				var error = new Error('SSFUsers operation failed response error');
@@ -42,7 +50,6 @@ module.exports = function(PostedTrips) {
 						id: k.driverId
 					}
 				},function(err, usersResponse){
-					console.log(usersResponse);
 					if(err || usersResponse === undefined || usersResponse === null) {
 						var error = new Error('No trips available at this time.');
 						error.statusCode = 500;

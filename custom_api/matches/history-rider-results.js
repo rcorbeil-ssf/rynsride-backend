@@ -7,7 +7,7 @@ module.exports = function(Matches, path, notes, rideId, method) {
     Matches.remoteMethod(path, {
         http: {path: '/'+path, verb: method},
         accepts: [
-            {arg: rideId, type: 'string', description: 'An object for filtering matches.'}
+            {arg: 'passedId', type: 'string', description: 'An object for filtering matches.'}
         ],
         notes: notes,
         description: "Returns one result.",

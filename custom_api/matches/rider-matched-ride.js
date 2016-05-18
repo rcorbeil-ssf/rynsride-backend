@@ -3,7 +3,7 @@ module.exports = function(Matches, path, state, notes, model, typeId, method) {
     Matches.remoteMethod(path, {
         http: {path: '/'+path, verb: method},
         accepts: [
-            {arg: typeId, type: 'string', description: 'An object for filtering matches.'}
+            {arg: 'passedId', type: 'string', description: 'An object for filtering matches.'}
         ],
         notes: notes,
         description: "Returns a partial results list of the query.",
